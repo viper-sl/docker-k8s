@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t vipersl/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true USERNAME/react-test npm test
+
+after_success:
+  - docker build -t vipersl/multi-client ./client
+  - docker build -t vipersl/multi-nginx ./nginx
+  - docker build -t vipersl/multi-server ./server
+  - docker build -t vipersl/multi-worker ./worker
+  #Log in to the docker cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #Take those images and push it to the docker hub
+  - docker push vipersl/multi-client
+  - docker push vipersl/multi-nginx
+  - docker push vipersl/multi-server
+  - docker push vipersl/multi-worker
