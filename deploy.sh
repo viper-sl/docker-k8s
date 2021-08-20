@@ -11,6 +11,6 @@ docker push vipersl/multi-server:$SHA
 docker push vipersl/multi-worker:$SHA
 
 kubectl apply -f k8s
-kubectl set image deployments/server-deployments server=vipersl/multi-server:$SHA
-kubectl set image deployments/client-deployments client=vipersl/multi-client:$SHA
-kubectl set image deployments/worker-deployments worker=vipersl/multi-worker:$SHA
+kubectl set image deployments/server-deployment server=vipersl/multi-server:$SHA
+kubectl set image deployments/client-deployment client=vipersl/multi-client:$SHA
+kubectl set image deployments/worker-deployment worker=vipersl/multi-worker:$SHA
